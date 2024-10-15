@@ -14,6 +14,8 @@ export const Subscribers=pgTable('subscribers',{
     userid:integer('userid').references(()=>Users.id).notNull(),
     stripesubscriptionid:varchar('stripe_subscription_id',{length:255}).notNull(),
     plan:varchar('plan',{length:50}).notNull(),
+    status: varchar("status", { length: 50 }).notNull(),
+
     currentstart:timestamp('current_start').notNull(),
     currentend:timestamp('current_end').notNull(),
     cancelperiod:boolean('cancelperiod').notNull().default(false)
