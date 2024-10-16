@@ -56,7 +56,7 @@ export async function updatepoints(userId:string,points:number){
 
 
 try{
-    const [updateduser]=await db.update(Users).set({points:sql`${Users.points} + ${points}`}).where(eq(Users.stripecutomerid,userId)).returning().execute()
+    const [updateduser]=await db.update(Users).set({ points: sql`${Users.points} + ${points}` }).where(eq(Users.stripecutomerid,userId)).returning().execute()
     return updateduser
 
 }catch(e){
@@ -66,4 +66,93 @@ try{
 }
 
 
+}
+
+export async function savegencontent(userId:string,content:string,prompt:string,contenttype:string){
+
+
+try{
+    const [user] = await db
+            .select({ id: Users.id })
+            .from(Users)
+            .where(eq(Users.stripecutomerid, userId))
+            .limit(1)
+            .execute();
+
+        if (!user) {
+            console.error(`No user found with stripeCustomerId: ${userId}`);
+            return null;
+        }
+        const [savedcontent] = await db
+        .insert(Generatedcontent)
+        .values({
+            userid: user.id,  // Use the fetched user ID
+            content,
+            prompt,
+            contenttype,
+            createdAT: new Date(),
+        })
+        .returning()
+        .execute();
+
+    return savedcontent;
+}catch(e){
+    console.error("Error saving generated content:", e);
+    return null;
+}
+
+}
+
+export async function getuserpoints(userId:string){
+    try{
+        const users=await db.select({points:Users.points,id:Users.id,email:Users.email}).from(Users).where(eq(Users.stripecutomerid,userId)).execute()
+    
+        if(users.length===0){
+            return 0
+
+        }
+        return users[0].points
+    } catch (error) {
+        console.error("Error fetching user points:", error);
+        return 0;
+      }
+}
+
+export async function getGencontentHistory(userId:string,limit:number=10){
+    try{
+
+
+        const [user] = await db
+        .select({ id: Users.id })
+        .from(Users)
+        .where(eq(Users.stripecutomerid, userId))
+        .limit(1)
+        .execute();
+
+    if (!user) {
+        console.error(`No user found with stripeCustomerId: ${userId}`);
+        return [];
+    }
+    const history = await db
+    .select({
+        id: Generatedcontent.id,
+        content: Generatedcontent.content,
+        prompt: Generatedcontent.prompt,
+        contenttype: Generatedcontent.contenttype,
+        createdAT: Generatedcontent.createdAT,
+    })
+    .from(Generatedcontent)
+    .where(eq(Generatedcontent.userid, user.id))  // Use user.id directly
+    .orderBy(desc(Generatedcontent.createdAT))
+    .limit(limit)
+    .execute();
+
+return history;
+
+
+    }
+    catch(e){
+        console.error("Error fetching generated content history:", e);
+    return [];
+    }
 }
