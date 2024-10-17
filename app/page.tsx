@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/Navbar";
 import {  RocketIcon, SparklesIcon, TrendingUpIcon, BirdIcon, ZapIcon, InstagramIcon, LinkedinIcon, CheckCircleIcon, ArrowRightIcon } from "lucide-react";
-import Image from "next/image";
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { auth } from "@clerk/nextjs/server";
