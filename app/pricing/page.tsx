@@ -34,7 +34,7 @@ const pricingPlans = [
     {
       name: "Enterprise",
       price: "Custom",
-      priceId: null,
+      priceId: '',
       features: [
         "Unlimited AI-generated posts",
         "All social media platforms",
@@ -47,7 +47,7 @@ const pricingPlans = [
   export default function PricingPage(){
     const {user,isSignedIn}=useUser()
     const [isload,setisload]=useState(false)
-    const handlesubscribe=async(priceId:any)=>{
+    const handlesubscribe=async(priceId:string)=>{
 
         if(!isSignedIn)
         {

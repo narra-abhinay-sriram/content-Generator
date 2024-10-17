@@ -26,8 +26,8 @@ export async function POST (req:Request){
          })
          return NextResponse.json({sessionId:session.id})
 
-    }catch(error:any){
-        return NextResponse.json( { error: "Error creating checkout session", details: error.message },
+    }catch(error){
+        return NextResponse.json( { error: "Error creating checkout session", details: error},
             { status: 500 })
 
     }
