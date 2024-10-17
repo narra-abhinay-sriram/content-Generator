@@ -67,12 +67,15 @@ const pricingPlans = [
                         throw new Error( "Failed to create checkout session");
                       }
                       const {sessionId}=await resp.json()
+                      console.log(sessionId)
                       const stripe=await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY!)
+                      console.log(stripe)
                       if(!stripe)
                       {
                         throw new Error ("failed to load stripe")
 
                       }
+                      console.log("hi3")
 
                       await stripe.redirectToCheckout({sessionId})
 

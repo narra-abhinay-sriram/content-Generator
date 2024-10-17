@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { headers } from "next/headers";
 import { createorupdatesubscription, updatepoints } from "@/utils/db/actions";
+console.log("h1")
 
 const stripe = new Stripe(process.env.SECRET_API_KEY!, {
   apiVersion: "2024-09-30.acacia",
@@ -74,6 +75,7 @@ export async function POST(req: Request) {
               { status: 500 }
             );
           }
+          console.log("h2")
 
           await updatepoints(userId,pointsToAdd)
 

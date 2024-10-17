@@ -81,7 +81,7 @@ export default function GenerateContent() {
     if (isLoaded && !isSignedIn) {
       router.push("/");
     } else if (isSignedIn && user) {
-      console.log("User loaded:", user);
+      //console.log("User loaded:", user);
       fetchUserPoints();
       fetchContentHistory();
     }
@@ -89,9 +89,9 @@ export default function GenerateContent() {
 
   const fetchUserPoints = async () => {
     if (user?.id) {
-      console.log("Fetching points for user:", user.id);
+      //console.log("Fetching points for user:", user.id);
       const points = await getuserpoints(user.id);
-      console.log("Fetched points:", points);
+      //console.log("Fetched points:", points);
       setUserPoints(points);
       if (points === 0) {
         console.log("User has 0 points. Attempting to create/update user.");

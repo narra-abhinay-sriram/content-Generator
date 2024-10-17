@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
+
 const stripe =new Stripe(process.env.SECRET_API_KEY!,{
     apiVersion:"2024-09-30.acacia"
 })  
