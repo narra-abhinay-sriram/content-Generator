@@ -6,7 +6,6 @@ import { useUser } from "@clerk/nextjs";
 import { CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { ne } from "drizzle-orm";
 
 
 const pricingPlans = [
@@ -63,7 +62,6 @@ const pricingPlans = [
                         priceId,userId:user?.id
                     })})
                     if (!resp.ok) {
-                        const errorData = await resp.json();
                         throw new Error( "Failed to create checkout session");
                       }
                       const {sessionId}=await resp.json()

@@ -76,17 +76,6 @@ export default function GenerateContent() {
       console.error("Gemini API key is not set");
     }
   }, []);
-
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.push("/");
-    } else if (isSignedIn && user) {
-      //console.log("User loaded:", user);
-      fetchUserPoints();
-      fetchContentHistory();
-    }
-  }, [isLoaded, isSignedIn, user, router]);
-
   const fetchUserPoints = async () => {
     if (user?.id) {
       //console.log("Fetching points for user:", user.id);
@@ -126,6 +115,18 @@ export default function GenerateContent() {
       return;
     }
 
+
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/");
+    } else if (isSignedIn && user) {
+      //console.log("User loaded:", user);
+      fetchUserPoints();
+      fetchContentHistory();
+    }
+  }, [isLoaded, isSignedIn, user, router,fetchContentHistory,fetchUserPoints]);
+
+  
     setIsLoading(true);
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
